@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Management Syste</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css"></link>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+<body>
+
+<div class="header">
+    <h5>HR Management System</h5>
+</div>
+<div class="content">
+    <div class="upper-btn-box">
+        <div class="btn-left-box">
+            <button class="add-btn"><i class="fa fa-plus"></i>&nbsp; Add Employee</button>
+        </div>
+        <div class="btn-right-box">
+            <i class="fa fa-search big-icon"></i>
+            <input type="text" id="empty" placeholder="Enter Employee ID">
+            <button>Search</button>
+            <button  style="background-color: mediumslateblue"><i class="fa fa-eraser"></i>&nbsp; Clear Filter</button>
+        </div>
+        <div style="clear: both"></div>
+    </div>
+    <div class="table-box">
+        <table>
+            <tr>
+                <th>Sr No</th>
+                <th>Profile</th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Last name</th>
+                <th>E-mail</th>
+                <th>Office code</th>
+                <th>Job Title</th>
+                <th>Action</th>
+            </tr>
+            <tbody id="table-data">
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal">
+    <i class="fa fa-times-circle close-icon"></i>
+    <div class="left-modal">
+        <div class="img-box">
+            <img src="avatar.png" id="profile-pic" width="150px" height="150px" alt="avatar">
+            <i class="fa fa-plus"></i>
+            <input type="file" id="upload-file">
+        </div>
+    </div>
+    <div class="right-modal">
+        <form id="register-form">
+            <div class="input-box">
+                <label for="id">Id</label>
+                <input type="text" id="id">
+            </div>
+            <div class="input-box">
+                <label for="name">Name</label>
+                <input type="text" id="name">
+            </div>
+            <div class="input-box">
+                <label for="last-name">Last name</label>
+                <input type="text" id="last-name">
+            </div>
+            <div class="input-box">
+                <label for="e-mail">E-mail</label>
+                <input type="text" id="e-mail">
+            </div>
+            <div class="input-box">
+                <label for="office-code">Ofiice code</label>
+                <input type="text" id="office-code">
+            </div>
+            <div class="input-box">
+                <label for="job-title">Job Title</label>
+                <input type="text" id="job-title">
+            </div>
+            <div class="input-box">
+                <button class="register-btn">Register</button>
+                <button class="update-btn" disabled="disabled" style="background-color:#260cb9">Update</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
