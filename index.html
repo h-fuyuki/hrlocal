@@ -59,8 +59,9 @@
     </div>
     <div class="right-modal">
         <form id="register-form">
+            <input type="hidden" id="current_index">
             <div class="input-box">
-                <label for="id">Id</label>
+                <label for="id">ID</label>
                 <input type="text" id="id">
             </div>
             <div class="input-box">
@@ -83,9 +84,9 @@
                 <label for="job-title">Job Title</label>
                 <input type="text" id="job-title">
             </div>
-            <div class="input-box">
-                <button class="register-btn">Register</button>
-                <button class="update-btn" disabled="disabled" style="background-color:#260cb9">Update</button>
+            <div class="input-box" style="margin-top: 2rem;">
+                <button class="register-btn" style="visibility: hidden">Register</button>
+                <button class="update-btn" style="visibility: hidden">Update</button>
             </div>
         </form>
     </div>
