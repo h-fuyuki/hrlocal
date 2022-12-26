@@ -28,7 +28,6 @@ let currentIndexVar = document.getElementById('current_index');
 let updateVar = document.querySelector('.update-btn');
 let registerVar = document.querySelector('.register-btn');
 let registerForm = document.querySelector('#register-form');
-let imgUrl;
 
 registerVar.onclick = function (e) {
     e.preventDefault();
@@ -63,7 +62,7 @@ function getFormData(){
         email: emailVar.value,
         office_code: officeVar.value,
         jobtitle: jobTitleVar.value,
-        profilePic: imgUrl === undefined ? 'avatar.png' : imgUrl
+        profilePic: profilePic.src === undefined ? 'avatar.png' : profilePic.src
     }
 }
 
@@ -136,7 +135,7 @@ const getDataFromLocal = () => {
         let data = userData[index];
         // chèn 1 dòng trong table
         tableData.innerHTML += `
-            <tr index='${index}'>
+            <tr>
                 <td>${index + 1}</td>
                 <td><img src="${data.profilePic}" width='40' height='40'></td>
                 <td>${data.id}</td>
@@ -147,7 +146,7 @@ const getDataFromLocal = () => {
                 <td>${data.jobtitle}</td>
                 <td>
                     <button class='edit-btn' data-index='${index}'><i class="fa fa-eye"></i></button>
-                    <button class="del-btn" id="delBtn-${index}"><i class="fa fa-trash"></i></button>
+                    <button class="del-btn" data-index='${index}'><i class="fa fa-trash"></i></button>
                 </td>
             </tr>
         `
@@ -155,6 +154,7 @@ const getDataFromLocal = () => {
 
     let listEditBtn = document.querySelectorAll('.edit-btn');
     listEditBtn.forEach(function (editBtn){
+        // bắt sự kiện cho từng nút view
         editBtn.onclick = function (){
             let data_index = editBtn.getAttribute('data-index');
             console.log('Edit index: ', data_index);
@@ -162,25 +162,40 @@ const getDataFromLocal = () => {
         }
     });
 
+    let listDeleteBtn = document.querySelectorAll('.del-btn');
+    listDeleteBtn.forEach(function (delBtn){
+        // bắt sự kiện cho từng nút delete
+        delBtn.onclick = function (){
+            let data_index = parseInt(delBtn.getAttribute('data-index'));
 
-    // bắt sự kiện cho nút view
+
+            // remove phần từ thứ data_index trong array userData
+            userData.splice(data_index, 1);
+
+            // lưu lại array userData vào localStorage
+            localStorage.setItem('userData', JSON.stringify(userData));
+
+            // remove dòng trong table
+            let tr = delBtn.parentElement.parentElement;
+            tr.remove();
+        }
+    });
 
 }
 getDataFromLocal();
 
 /** Lấy hình ảnh */
-var profile_pic = document.querySelector('#profile-pic');
-var uploadPic = document.querySelector('#upload-file');
+let profilePic = document.querySelector('#profile-pic');
+let uploadPic = document.querySelector('#upload-file');
 uploadPic.onchange = function () {
     if (uploadPic.files[0].size < 1000000) {
-        var fReader = new FileReader();
+        let fReader = new FileReader();
         fReader.onload = function () {
-            var imgUrl = fReader.result;
-            profile_pic.src = imgUrl;
+            let imgUrl = fReader.result;
+            profilePic.src = imgUrl;
             console.log(imgUrl);
         }
         fReader.readAsDataURL(uploadPic.files[0]);
-
     } else {
         alert('file is too big')
     }
@@ -213,23 +228,30 @@ for (i = 0; i < allDelBtn.length; i++) {
     }
 }
 
-function showDialogToAddNew() {
+function resetDialog(){
     registerForm.reset();
+    profilePic.src = 'avatar.png';
+}
+
+function showDialogToAddNew() {
+    resetDialog();
     document.querySelector('.register-btn').style.visibility = 'visible';
     document.querySelector('.update-btn').style.visibility = 'hidden';
     dialogBox.classList.add('active');
 }
 
 function showDialogToUpdate(index) {
-    registerForm.reset();
+    resetDialog();
     let currentRecord = userData[index];
+
+    currentIndexVar.value = index;
     idVar.value = currentRecord.id;
     nameVar.value = currentRecord.name;
     lastNameVar.value = currentRecord.last_name;
     emailVar.value = currentRecord.email;
     officeVar.value = currentRecord.office_code;
     jobTitleVar.value = currentRecord.jobtitle;
-    currentIndexVar.value = index;
+    profilePic.src = currentRecord.profilePic;
 
     document.querySelector('.register-btn').style.visibility = 'hidden';
     document.querySelector('.update-btn').style.visibility = 'visible';
