@@ -1,7 +1,19 @@
 let addBtn = document.querySelector(".add-btn");
 let dialogBox = document.querySelector('.modal');
 let closeBtn = document.querySelector('.close-icon');
+let searchBtn = document.querySelector('#search-button')
 
+// có nhiều cách sự kiện của 1 html element
+// Cách 2: tên_biến_element.tên_sự_kiện = hàm_nào đó
+// Ví dụ addBtn.onclick = () => { ....}
+// hoặc addBtn.onclick = function () { ....}
+// hoặc addBtn.onclick = function (e) { ....} nếu muốn dùng biến e
+
+// ngoài ta có thể dùng cách 2 như sau:
+// Cách 2: tên_biến_element.addEventListener(tên_sự_kiện, hàm nào đó)
+// Ví dụ: closeBtn.addEventListener('click', () => {...})
+// Hoặc closeBtn.addEventListener('click', function () {...})
+// Hoặc closeBtn.addEventListener('click', function (e) {...}) nếu muốn dùng biến e
 
 //bắt sự kiện click chuột của button Add Employee
 addBtn.onclick = () => {
@@ -12,6 +24,17 @@ addBtn.onclick = () => {
 closeBtn.addEventListener('click', () => {
     dialogBox.classList.remove('active')
 })
+
+searchBtn.onclick = () => {
+    getDataFromLocal();
+}
+
+document.querySelector('#clear-search').onclick = function (){
+    console.log('clear search key')
+    searchKey.value = "";
+    getDataFromLocal();
+}
+
 
 
 /* DialogBox */
@@ -28,6 +51,8 @@ let currentIndexVar = document.getElementById('current_index');
 let updateVar = document.querySelector('.update-btn');
 let registerVar = document.querySelector('.register-btn');
 let registerForm = document.querySelector('#register-form');
+
+let searchKey = document.querySelector('#search-key')
 
 registerVar.onclick = function (e) {
     e.preventDefault();
@@ -133,6 +158,12 @@ const getDataFromLocal = () => {
     tableData.innerHTML = '';
     for (let index = 0; index < userData.length; index++) {
         let data = userData[index];
+
+        // nếu searchKey khác rỗng và không giống employee id thì không cần hiển thị
+        if (searchKey.value !== '' && !data.id.includes(searchKey.value)){
+            continue;
+        }
+
         // chèn 1 dòng trong table
         tableData.innerHTML += `
             <tr>
